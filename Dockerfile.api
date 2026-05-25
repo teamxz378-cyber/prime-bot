@@ -1,0 +1,10 @@
+FROM python:3.11-slim
+WORKDIR /app
+# Create data directory and ensure it exists
+RUN mkdir -p /data
+# Set environment variable for the API to use the persistent volume path
+ENV DATA_DIR=/data
+COPY api.py .
+RUN pip install --no-cache-dir fastapi uvicorn python-multipart
+EXPOSE 8000
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
